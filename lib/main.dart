@@ -26,7 +26,10 @@ class MyHomePage extends StatelessWidget {
   MyHomePage(this.title);
   @override
   Widget build(BuildContext context) {
-    this.widgetsList.add(WidgetContainer(nameAndTitle:"25:BackDropFilter",content: BackDropFilterTest("25:BackDropFilter")));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:BackDropFilterTest.widgetName,content: BackDropFilterTest()));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:AlignTest.widgetName,content: AlignTest()));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:PostionedTest.widgetName,content: PostionedTest()));
+    
 
 
     return Scaffold(
