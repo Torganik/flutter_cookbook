@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cookbook/widgets_for_test.dart';
+import 'package:flutter_cookbook/widgets_for_demo.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +29,10 @@ class MyHomePage extends StatelessWidget {
     this.widgetsList.add(WidgetContainer(nameAndTitle:BackDropFilterTest.widgetName,content: BackDropFilterTest()));
     this.widgetsList.add(WidgetContainer(nameAndTitle:AlignTest.widgetName,content: AlignTest()));
     this.widgetsList.add(WidgetContainer(nameAndTitle:PostionedTest.widgetName,content: PostionedTest()));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:AnimatedBuilderDemo.widgetName,content: AnimatedBuilderDemo()));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:DismissibleDemo.widgetName,content: DismissibleDemo()));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:SizedBoxDemo.widgetName,content: SizedBoxDemo()));
+    
     
 
 
