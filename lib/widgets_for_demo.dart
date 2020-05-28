@@ -578,17 +578,23 @@ class _SizedBoxDemoState extends State<SizedBoxDemo> {
 }
 
 //31: ValueListenableBuilder
-// With ValueListenableBuilder you can change state of data in  StatelessWidget
 class ValueListenableBuilderDemo extends StatelessWidget {
+  // With ValueListenableBuilder i can rebuild StatelessWidget
   static String get widgetName => "31: ValueListenableBuilder";
   final ValueNotifier<int> valNotify = ValueNotifier(1);
+
+  // My data notifier
+  final ButtonPressNotifier buttonNotifier =
+      ButtonPressNotifier(ButtonPressData());
 
   // Methods that changes data.
   void onPressPlus() {
     valNotify.value = valNotify.value + 1;
+    buttonNotifier.pressButton(true);
   }
 
   void onPressMinus() {
+    buttonNotifier.pressButton(false);
     if (valNotify.value == 0) {
       return;
     }
@@ -613,13 +619,22 @@ class ValueListenableBuilderDemo extends StatelessWidget {
       children: [
         Expanded(
             child: RaisedButton(
-          onPressed: onPressPlus,
-          child: Text("Add"),
-        )),
+                onPressed: onPressPlus,
+                child: ValueListenableBuilder(
+                  valueListenable: buttonNotifier,
+                  builder: (BuildContext context, ButtonPressData val, _) {
+                    return Text("Add pressed ${val.addPress} times");
+                  },
+                ))),
         Expanded(
             child: RaisedButton(
           onPressed: onPressMinus,
-          child: Text("Sub"),
+          child: ValueListenableBuilder(
+            valueListenable: buttonNotifier,
+            builder: (BuildContext context, ButtonPressData val, _) {
+              return Text("Sub pressed ${val.subPress} times");
+            },
+          ),
         )),
       ],
     ));
@@ -691,5 +706,33 @@ class ValueListenableBuilderDemo extends StatelessWidget {
                 child: widgets[index]);
           },
         ));
+  }
+}
+
+// Custom notifier for data class ButtonPressData
+class ButtonPressNotifier extends ValueNotifier<ButtonPressData> {
+  ButtonPressNotifier(ButtonPressData value) : super(value);
+
+  void pressButton(bool add) {
+    if (add) {
+      this.value.pressAdd();
+    } else {
+      this.value.pressSub();
+    }
+    this.notifyListeners();
+  }
+}
+
+// Data class for custom notifier demo
+class ButtonPressData {
+  int addPress = 0;
+  int subPress = 0;
+
+  void pressAdd() {
+    addPress += 1;
+  }
+
+  void pressSub() {
+    subPress += 1;
   }
 }
