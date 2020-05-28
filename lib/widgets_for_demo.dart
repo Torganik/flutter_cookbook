@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+
 // 25: BackDropFilter
 class BackDropFilterTest extends StatefulWidget {
   static get widgetName => "25: BackDropFilter";
@@ -618,22 +619,26 @@ class ValueListenableBuilderDemo extends StatelessWidget {
     widgets.add(Row(
       children: [
         Expanded(
-            child: RaisedButton(
-                onPressed: onPressPlus,
-                child: ValueListenableBuilder(
-                  valueListenable: buttonNotifier,
-                  builder: (BuildContext context, ButtonPressData val, _) {
-                    return Text("Add pressed ${val.addPress} times");
-                  },
-                ))),
+            child: Center(
+          child: RaisedButton(
+              onPressed: onPressPlus,
+              child: ValueListenableBuilder(
+                valueListenable: buttonNotifier,
+                builder: (BuildContext context, ButtonPressData val, _) {
+                  return Text("Add pressed ${val.addPress} times");
+                },
+              )),
+        )),
         Expanded(
-            child: RaisedButton(
-          onPressed: onPressMinus,
-          child: ValueListenableBuilder(
-            valueListenable: buttonNotifier,
-            builder: (BuildContext context, ButtonPressData val, _) {
-              return Text("Sub pressed ${val.subPress} times");
-            },
+            child: Center(
+          child: RaisedButton(
+            onPressed: onPressMinus,
+            child: ValueListenableBuilder(
+              valueListenable: buttonNotifier,
+              builder: (BuildContext context, ButtonPressData val, _) {
+                return Text("Sub pressed ${val.subPress} times");
+              },
+            ),
           ),
         )),
       ],
@@ -683,6 +688,71 @@ class ValueListenableBuilderDemo extends StatelessWidget {
                 return Text("${val * 3}");
               },
             )),
+      ],
+    ));
+
+    widgets.add(Row(
+      children: [
+        Expanded(
+          child: Center(
+            child: Container(
+              height: 20,
+              width: 20,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: ValueListenableBuilder(
+                valueListenable: valNotify,
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  color: Colors.green,
+                ),
+                builder: (BuildContext context, int val, child) {
+                  return Transform.rotate(
+                    angle: val * 27 * 3.14,
+                    child: child,
+                  );
+                }),
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: ValueListenableBuilder(
+                valueListenable: valNotify,
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  color: Colors.indigoAccent,
+                ),
+                builder: (BuildContext context, int val, child) {
+                  return Transform.rotate(
+                    angle: -val * 17 * 3.14,
+                    child: child,
+                  );
+                }),
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: ValueListenableBuilder(
+                valueListenable: valNotify,
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  color: Colors.amber,
+                ),
+                builder: (BuildContext context, int val, child) {
+                  return Transform.rotate(
+                    angle: val * 10 * 3.14,
+                    child: child,
+                  );
+                }),
+          ),
+        ),
       ],
     ));
 
