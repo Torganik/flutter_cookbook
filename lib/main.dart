@@ -32,6 +32,7 @@ class MyHomePage extends StatelessWidget {
     this.widgetsList.add(WidgetContainer(nameAndTitle:AnimatedBuilderDemo.widgetName,content: AnimatedBuilderDemo()));
     this.widgetsList.add(WidgetContainer(nameAndTitle:DismissibleDemo.widgetName,content: DismissibleDemo()));
     this.widgetsList.add(WidgetContainer(nameAndTitle:SizedBoxDemo.widgetName,content: SizedBoxDemo()));
+    this.widgetsList.add(WidgetContainer(nameAndTitle:ValueListenableBuilderDemo.widgetName,content: ValueListenableBuilderDemo()));
     
     
 

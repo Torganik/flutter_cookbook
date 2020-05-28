@@ -530,51 +530,166 @@ class _SizedBoxDemoState extends State<SizedBoxDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(SizedBoxDemo.widgetName)),
-        body: Column(
-          children:[
-            SizedBox(
-              height: 50,
-              width: 70,
-              child: Container(
-                child: Text("Sized box 50x70"),
-                color: Colors.green
-              ),
-            ),
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: Container(
-                color: Colors.amber,
-                child: Text("Container 200xinfinity"),
-              ),
-            ),
-            SizedBox(
-              height: 76,
-              width: 75,
-              child: Container(decoration: BoxDecoration(border: Border.all()),child:Text("Text 76x75 ")),
-            ),
-            MaterialButton(
-              onPressed: (){
-                print("Hello");
-              },
-              elevation: 5.0,color: Colors.amberAccent,
-              child: Text("Press me"),
-            ),
-            SizedBox(
-              height: 200,
-              width: 150,
-              child: MaterialButton(
-              onPressed: (){
-                print("Hello");
-              },
-              elevation: 5.0,color: Colors.amberAccent,
-              child: Text("Same button sized on 200x150"),
-            ),
-            )
-          ]
-          
+      appBar: AppBar(title: Text(SizedBoxDemo.widgetName)),
+      body: Column(children: [
+        SizedBox(
+          height: 50,
+          width: 70,
+          child: Container(child: Text("Sized box 50x70"), color: Colors.green),
         ),
-        );
+        SizedBox(
+          height: 200,
+          width: double.infinity,
+          child: Container(
+            color: Colors.amber,
+            child: Text("Container 200xinfinity"),
+          ),
+        ),
+        SizedBox(
+          height: 76,
+          width: 75,
+          child: Container(
+              decoration: BoxDecoration(border: Border.all()),
+              child: Text("Text 76x75 ")),
+        ),
+        MaterialButton(
+          onPressed: () {
+            print("Hello");
+          },
+          elevation: 5.0,
+          color: Colors.amberAccent,
+          child: Text("Press me"),
+        ),
+        SizedBox(
+          height: 200,
+          width: 150,
+          child: MaterialButton(
+            onPressed: () {
+              print("Hello");
+            },
+            elevation: 5.0,
+            color: Colors.amberAccent,
+            child: Text("Same button sized on 200x150"),
+          ),
+        )
+      ]),
+    );
+  }
+}
+
+//31: ValueListenableBuilder
+// With ValueListenableBuilder you can change state of data in  StatelessWidget
+class ValueListenableBuilderDemo extends StatelessWidget {
+  static String get widgetName => "31: ValueListenableBuilder";
+  final ValueNotifier<int> valNotify = ValueNotifier(1);
+
+  // Methods that changes data.
+  void onPressPlus() {
+    valNotify.value = valNotify.value + 1;
+  }
+
+  void onPressMinus() {
+    if (valNotify.value == 0) {
+      return;
+    }
+    valNotify.value = valNotify.value - 1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> widgets = List();
+
+    widgets.add(Container(
+      alignment: Alignment.center,
+      child: ValueListenableBuilder(
+        valueListenable: valNotify,
+        builder: (BuildContext context, int val, _) {
+          return Text("Value is: $val");
+        },
+      ),
+    ));
+
+    widgets.add(Row(
+      children: [
+        Expanded(
+            child: RaisedButton(
+          onPressed: onPressPlus,
+          child: Text("Add"),
+        )),
+        Expanded(
+            child: RaisedButton(
+          onPressed: onPressMinus,
+          child: Text("Sub"),
+        )),
+      ],
+    ));
+
+    widgets.add(Row(
+      children: [
+        Expanded(
+            flex: 1,
+            child: ValueListenableBuilder(
+              valueListenable: valNotify,
+              builder: (BuildContext context, int val, _) {
+                return Text("$val");
+              },
+            )),
+        Expanded(
+            flex: 2,
+            child: Text(
+              "Data widget №1",
+              textAlign: TextAlign.right,
+            )),
+      ],
+    ));
+
+    widgets.add(Row(
+      children: [
+        Expanded(flex: 2, child: Text("Data widget №2 is:")),
+        Expanded(
+            flex: 1,
+            child: ValueListenableBuilder(
+              valueListenable: valNotify,
+              builder: (BuildContext context, int val, _) {
+                return Text("$val");
+              },
+            )),
+      ],
+    ));
+
+    widgets.add(Row(
+      children: [
+        Expanded(flex: 2, child: Text("Data widget 3 (mult. by 3):")),
+        Expanded(
+            flex: 1,
+            child: ValueListenableBuilder(
+              valueListenable: valNotify,
+              builder: (BuildContext context, int val, _) {
+                return Text("${val * 3}");
+              },
+            )),
+      ],
+    ));
+
+    return Scaffold(
+        appBar: AppBar(
+            title: ValueListenableBuilder(
+                valueListenable: valNotify,
+                builder: (BuildContext context, int val, _) {
+                  return Text(ValueListenableBuilderDemo.widgetName + "($val)");
+                })),
+        body: ListView.builder(
+          itemCount: widgets.length,
+          itemBuilder: (BuildContext cntx, int index) {
+            return Container(
+                height: 50,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    border: Border.all()),
+                child: widgets[index]);
+          },
+        ));
   }
 }
